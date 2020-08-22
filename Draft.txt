@@ -1,0 +1,10 @@
+
+
+SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String token = localStorage.getString('bigStore.jwt');
+    String _url = 'http://localhost:8000/orders-count';
+    final response = await http.get(_url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
