@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:simple_form/screens/ordersList.dart';
+import 'package:simple_form/screens/productsList.dart';
 
 void main() {
-  runApp(BuyerProfile());
+  runApp(VendorProfile());
 }
 
-class BuyerProfile extends StatelessWidget {
+class VendorProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +17,7 @@ class BuyerProfile extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: BuyerProfilePage(),
+      home: VendorProfilePage(),
       // routes: <String, WidgetBuilder>{
       //   '/orders': (BuildContext context) => new OrdersPage()
       // },
@@ -26,11 +25,11 @@ class BuyerProfile extends StatelessWidget {
   }
 }
 
-class BuyerProfilePage extends StatefulWidget {
-  BuyerProfilePage({Key key}) : super(key: key);
+class VendorProfilePage extends StatefulWidget {
+  VendorProfilePage({Key key}) : super(key: key);
 
   @override
-  _BuyerProfileState createState() => _BuyerProfileState();
+  _VendorProfileState createState() => _VendorProfileState();
 }
 
 class UserData {
@@ -38,18 +37,17 @@ class UserData {
   TextEditingController _phoneNumber = TextEditingController();
 }
 
-class _BuyerProfileState extends State<BuyerProfilePage> {
+class _VendorProfileState extends State<VendorProfilePage> {
   UserData _updateData = new UserData();
 
   static var userData;
-  static var orders;
-  bool _validate;
+  static var uploads;
 
   @override
   void initState() {
     _getUserInfo();
     // reloadUser();
-    _countOrders();
+    _countUploads();
     // updateProfile();
     super.initState();
   }
@@ -88,10 +86,10 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
   //   });
   // }
 
-  void _countOrders() async {
+  void _countUploads() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String token = localStorage.getString('bigStore.jwt');
-    String _url = 'http://localhost:8000/api/orders';
+    String _url = 'http://localhost:8000/api/products';
     var response = await http.get(_url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -100,9 +98,9 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
     var body = json.decode(response.body);
     // print(body.toString());
     setState(() {
-      orders = body.length;
+      uploads = body.length;
     });
-    print(orders);
+    print(uploads);
   }
 
   //it's updating in the DB but not automatically changing on the screen
@@ -124,7 +122,7 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         })
-        .then((response) => print(response))
+        .then((response) => print(response.body))
         .catchError((error) => print(error));
   }
 
@@ -224,13 +222,11 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
               controller: this._updateData._name,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: "Buyer's name",
-                labelStyle:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green)),
-                // errorText: _validate ?? 'Name should not be empty'
-              ),
+                  labelText: "Vendor's name",
+                  labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green))),
             ),
             actions: <Widget>[
               new FlatButton(
@@ -239,12 +235,6 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
                   style: TextStyle(color: Colors.green),
                 ),
                 onPressed: () {
-                  // setState(() {
-                  //   // this._updateData._name.text.isEmpty
-                  //   //     ? _validate = true
-                  //   //     : _validate = false;
-                  //   _validate = this._updateData._name.text.isEmpty;
-                  // });
                   updateProfile();
                   // reloadUser();
                   Navigator.of(context).pop();
@@ -265,7 +255,7 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
               controller: this._updateData._phoneNumber,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  labelText: "Buyer's phone number",
+                  labelText: "Vendor's phone number",
                   labelStyle: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.grey),
                   focusedBorder: UnderlineInputBorder(
@@ -336,7 +326,7 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
       children: <Widget>[
         Container(
           child: Text(
-            'Buyer',
+            'Vendor',
             style: TextStyle(
                 fontSize: 36.0,
                 fontStyle: FontStyle.italic,
@@ -437,7 +427,7 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget ordersSection = Container(
+    Widget uploadsSection = Container(
         margin: const EdgeInsets.all(20.0),
         child: Row(
           children: <Widget>[
@@ -448,12 +438,12 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
                   Container(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      'Number of orders',
+                      'Number of uploads',
                       style: TextStyle(color: Colors.grey[500]),
                     ),
                   ),
                   Text(
-                    orders.toString(),
+                    uploads.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -462,11 +452,12 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
               ),
             ),
             InkWell(
-              child: Text("View"),
+              child: Text('View'),
               onTap: () {
-                // Navigator.of(context).pushNamed('/orders');
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => OrdersPage()));
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ProductsPage()));
               },
             )
           ],
@@ -483,7 +474,7 @@ class _BuyerProfileState extends State<BuyerProfilePage> {
           context, 'Email', userData != null ? userData['email'] : ""),
       // _buildResponse(context, 'Email',
       //     userData != null ? userData['email'] : "", Icons.edit),
-      ordersSection,
+      uploadsSection,
       _buildPhoneResponse(
           context,
           'Phone Number',

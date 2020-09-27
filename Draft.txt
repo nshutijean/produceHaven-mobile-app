@@ -8,3 +8,387 @@ SharedPreferences localStorage = await SharedPreferences.getInstance();
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+
+
+//Password(probably not)
+            // Row(
+            //   children: <Widget>[
+            //     Column(
+            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //       children: <Widget>[
+            //         Text(
+            //           "Number of orders",
+            //           style: TextStyle(
+            //               fontSize: 16.0, fontWeight: FontWeight.w300),
+            //         ),
+            //         Text(
+            //           "3",
+            //           style: TextStyle(
+            //               fontSize: 16.0, fontWeight: FontWeight.w300),
+            //         ),
+            //       ],
+            //     ),
+
+            //     //edit icon which should have an onTap() or onPressed function to edit the text
+            //     Column(
+            //       children: <Widget>[
+            //         Text(
+            //           "View",
+            //           style: TextStyle(
+            //               fontSize: 15.0, fontWeight: FontWeight.w400),
+            //         )
+            //       ],
+            //     )
+            //   ],
+            // )
+
+              //title
+            // Container(
+                //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 120.0, 0.0),
+                //   child: Text(
+                //     "Buyer",
+                //     style: TextStyle(
+                //         fontSize: 40.0,
+                //         fontWeight: FontWeight.w200,
+                //         fontStyle: FontStyle.italic),
+                //     // textAlign: TextAlign.left,
+                //   ),
+                // ),
+
+//upload methods
+// setStatus(String message) {
+  //   setState(() {
+  //     status = message;
+  //   });
+  // }
+
+  // startUpload() {
+  //   setStatus("Uploading image...");
+  //   if (imageFile == null) {
+  //     setStatus(errMessage);
+  //   }
+  //   String fileName = imageFile.path.split('/').last;
+  //   uploadFile(fileName);
+  // }
+
+  // uploadFile(String fileName) {
+  //   http.post(uploadEndPoint, body: {"name": fileName}).then((result) {
+  //     setStatus(result.statusCode == 200 ? result.body : errMessage);
+  //   }).catchError((error) {
+  //     setStatus(error);
+  //   });
+  // }
+
+
+  uploadFile(context) async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   this.setState(() {
+  //     imageFile = File(pickedFile.path);
+  //     // imageFile = pickedFile as File;
+  //     // print(pickedFile.path);
+  //   });
+
+  //   var postUri = Uri.parse("http://localhost:8000/api/upload-file");
+
+  //   var request = new http.MultipartRequest("POST", postUri);
+  //   request.fields['user'] = 'this@email.you';
+  //   request.files.add(new http.MultipartFile.fromBytes(
+  //       'file', await File.fromUri(Uri.parse(pickedFile.path)).readAsBytes(),
+  //       contentType: new MediaType('image', 'jpeg')));
+  //   request.send().then((response) {
+  //     if (response.statusCode == 200) {
+  //       print("Uploaded!");
+  //     } else {
+  //       //   var responseData = await response.stream.toBytes();
+  //       //   var responseString = String.fromCharCodes(responseData);
+  //       // print(responseString);
+  //     }
+  //   });
+  // }
+
+
+
+  // _asyncFileUpload() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   this.setState(() {
+  //     imageFile = File(pickedFile.path);
+  //     // imageFile = pickedFile as File;
+  //     // print(pickedFile.path);
+  //   });
+  //   //create multipart request for POST or PATCH method
+  //   var request = http.MultipartRequest(
+  //       "POST", Uri.parse("http://localhost:8000/api/upload-file"));
+  //   //add text fields
+  //   request.fields["text_field"] = "text";
+  //   //create multipart using filepath, string or bytes
+  //   var pic = await http.MultipartFile.fromPath(
+  //       "file_field", pickedFile.path.toString());
+  //   //add multipart to request
+  //   request.files.add(pic);
+  //   var response = await request.send();
+
+  //   //Get the response from the server
+  //   var responseData = await response.stream.toBytes();
+  //   var responseString = String.fromCharCodes(responseData);
+  //   print(responseString);
+  // }
+                
+
+// Dio dio = new Dio();
+    // var formData = FormData();
+    // formData.files.add(MapEntry(
+    //   "Picture",
+    //   await MultipartFile.fromFile(pickedFile.path,
+    //       filename: imageFile.toString()),
+    // ));
+    // // var response = await dio.client.post('v1/post', data: formData);
+    // var response =
+    //     await dio.post('http://localhost:8000/api/upload-file', data: formData);
+    // print(response.data.toString());
+
+    // TextFormField(
+                      //   controller: this._productData._category,
+                      //   keyboardType: TextInputType.text,
+                      //   validator: (String value) {
+                      //     return value.isEmpty ? "Category is required" : null;
+                      //   },
+                      //   onSaved: (String value) {
+                      //     this._productData._category.text = value;
+                      //   },
+                      //   decoration: InputDecoration(
+                      //       hintText: "Set Category",
+                      //       labelText: "Product's Category",
+                      //       labelStyle: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.grey),
+                      //       focusedBorder: UnderlineInputBorder(
+                      //           borderSide: BorderSide(color: Colors.green))),
+                      // ),
+                      // TextField(
+                      //   onSubmitted: (String userInput) {
+                      //     setState(() {
+                      //       type = userInput;
+                      //     });
+                      //   },
+                      // )
+
+//buyer_profile.dart
+---------------------
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_form/api/api.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(MaterialApp(
+    home: BuyerProfile(),
+  ));
+}
+
+class BuyerProfile extends StatefulWidget {
+  BuyerProfile({Key key}) : super(key: key);
+
+  @override
+  _BuyerProfileState createState() => _BuyerProfileState();
+}
+
+class _BuyerProfileState extends State<BuyerProfile> {
+  var orders;
+  var userData;
+
+  @override
+  void initState() {
+    _getUserInfo();
+    _countOrders();
+    super.initState();
+  }
+
+  void _getUserInfo() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var userJson = localStorage.getString('bigStore.user');
+    var user = json.decode(userJson);
+    setState(() {
+      userData = user;
+    });
+  }
+
+  void _countOrders() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String token = localStorage.getString('bigStore.jwt');
+    String _url = 'http://localhost:8000/api/orders-count';
+    var response = await http.get(_url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    var body = json.decode(response.body);
+    // print(body.toString());
+    setState(() {
+      orders = body.toString();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(),
+      body: Container(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            //Logout and title
+            Row(
+              children: <Widget>[
+                // Text(
+                //   "Logout",
+                //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                // ),
+                Padding(padding: EdgeInsets.fromLTRB(20.0, 90.0, 0.0, 0.0)),
+                InkWell(
+                  onTap: () {
+                    logout();
+                  },
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Text(
+                  "Profile",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+
+            // Name
+            Row(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      "Name/s",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                    Text(
+                      userData != null ? userData['name'] : "",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
+
+                //edit icon which should have an onTap() or onPressed function to edit the text
+                Column(
+                  children: <Widget>[Icon(Icons.edit)],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            //email
+            Row(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      "Email",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                    Text(
+                      userData != null ? userData['email'] : "",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
+
+                //edit icon which should have an onTap() or onPressed function to edit the text
+                Column(
+                  children: <Widget>[Icon(Icons.edit)],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+
+            //number of orders
+            Row(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      "Number of orders",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                    Text(
+                      orders.toString(),
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
+
+                //edit icon which should have an onTap() or onPressed function to edit the text
+                Column(
+                  children: <Widget>[
+                    Text(
+                      "View",
+                      style: TextStyle(
+                          fontSize: 15.0, fontWeight: FontWeight.w400),
+                    )
+                  ],
+                )
+              ],
+            ),
+
+            SizedBox(height: 15.0),
+            Row(
+              children: <Widget>[
+                Text(
+                  "Save changes",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // void logout() async {
+  //   // revoke token from server(logout)
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   String token = localStorage.getString('bigStore.jwt');
+
+  //   String _url = 'http://localhost:8000/api/logout';
+
+  //   // var res = await http.post(_url, body: data, headers: {
+  //   //   'Accept': 'application/json',
+  //   //   'Authorization': 'Bearer $token',
+  //   // });
+  //   var res = await CallApi().getData('logout');
+  //   var body = json.decode(res.body);
+  //   print(body);
+  // }
+}

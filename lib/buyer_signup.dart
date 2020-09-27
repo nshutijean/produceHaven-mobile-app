@@ -33,8 +33,6 @@ class BuyerSignupPage extends StatefulWidget {
 }
 
 class SignUpData {
-  // String name = "";
-  // String email = "";
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _pass = TextEditingController();
@@ -80,12 +78,6 @@ class _BuyerSignupPageState extends State<BuyerSignupPage> {
       var user = json.decode(userJson);
       print(user['id']);
 
-      //Go to either screen(profile or QRscanner) in buyerBoard route after registration
-      // if(user['isAdmin'] == 0) {
-
-      // } else {
-
-      // }
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => BuyerBoardPage()));
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_form/scanner/scan.dart';
+import 'package:simple_form/screens/ordersList.dart';
 
 import 'buyer_profile.dart';
 
@@ -24,6 +25,7 @@ class BuyerBoardPage extends StatefulWidget {
 
 class _BuyerBoardState extends State<BuyerBoardPage> {
   var _currentPage = 0;
+  // var _pages = [BuyerProfile(), OrdersPage(), Scan()];
   var _pages = [BuyerProfile(), Scan()];
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,8 @@ class _BuyerBoardState extends State<BuyerBoardPage> {
                 items: [
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person), title: Text("Profile")),
+                  // BottomNavigationBarItem(
+                  //     icon: Icon(Icons.shop_two), title: Text("Orders")),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.scanner), title: Text("Scan Code")),
                 ],
