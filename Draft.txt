@@ -392,3 +392,83 @@ class _BuyerProfileState extends State<BuyerProfile> {
   //   print(body);
   // }
 }
+
+
+//upload Product
+// Padding(
+                      //   padding: const EdgeInsets.all(25.0),
+                      //   child: GestureDetector(
+                      //     child: Text(
+                      //       isUploading ? "Uploading" : "Upload",
+                      //       style: TextStyle(
+                      //         decoration: TextDecoration.underline,
+                      //         fontSize: 24.0,
+                      //         fontWeight: FontWeight.w400,
+                      //       ),
+                      //     ),
+                      //     onTap: () {
+                      //       if (_formKey.currentState.validate()) {
+                      //         _formKey.currentState.save();
+                      //         print("P_name: ${_productData._name.text}");
+                      //         print("P_price: ${_productData._price.text}");
+                      //         print("P_units: ${_productData._units.text}");
+                      //         print(
+                      //             "P_description: ${_productData._description.text}");
+                      //         print(
+                      //             "P_category: ${_currenItemsSelected.toString()}");
+                      //       }
+                      //       isUploading ? null : _saveProduct();
+                      //     },
+                      //   ),
+                      // )
+
+
+//QRcode details png
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ViewQrcode());
+}
+
+class ViewQrcode extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ViewQrcodePage(),
+    );
+  }
+}
+
+class ViewQrcodePage extends StatefulWidget {
+  ViewQrcodePage({Key key}) : super(key: key);
+
+  @override
+  _ViewQrcodePageState createState() => _ViewQrcodePageState();
+}
+
+class _ViewQrcodePageState extends State<ViewQrcodePage> {
+  var qrcode;
+
+  //get Product id from api
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Share QRcode', style: TextStyle(color: Colors.green)),
+      ),
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+              tag: 'qrcode_img',
+              child: Image.network(
+                qrcode,
+              )),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}

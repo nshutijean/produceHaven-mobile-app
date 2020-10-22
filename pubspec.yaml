@@ -28,6 +28,7 @@ dependencies:
   image_picker:
   dio:
   path_provider:
+  image: ^2.1.12
 
 dev_dependencies:
   flutter_test:

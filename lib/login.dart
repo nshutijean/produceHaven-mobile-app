@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -82,10 +83,10 @@ class _FormPageState extends State<FormPage> {
                 keyboardType: TextInputType.emailAddress,
                 validator: (String value) {
                   RegExp regExp = new RegExp(this._regexValidation.p);
-                  if (!regExp.hasMatch(value)) {
+                  if (value.isEmpty) {
+                    return "Email must not be empty";
+                  } else if (!regExp.hasMatch(value)) {
                     return "Email is not valid";
-                  } else if (value.isEmpty) {
-                    return "Please enter your email";
                   }
                   return null;
                 },
@@ -136,13 +137,15 @@ class _FormPageState extends State<FormPage> {
                 ),
                 onPressed: () {
                   _isLoading
-                      ? showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              content: Text("Failed to sign-in"),
-                            );
-                          })
+                      ?
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return AlertDialog(
+                      //       content: Text("Failed to sign-in"),
+                      //     );
+                      //   })
+                      null
                       : _login();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
@@ -208,6 +211,10 @@ class _FormPageState extends State<FormPage> {
   }
 
   void _login() async {
+    LinearProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+      backgroundColor: Colors.white,
+    );
     setState(() {
       _isLoading = true;
     });
@@ -237,12 +244,84 @@ class _FormPageState extends State<FormPage> {
         Navigator.push(context,
             new MaterialPageRoute(builder: (context) => BuyerBoardPage()));
       } else if (user['is_admin'] == 1) {
+        //trying to add a progressing bar while signing-in 😪
+        // Timer.periodic(new Duration(seconds: 1), (timer) {
+        //   return showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        //         title: Text("Signed in"),
+        //         // content: LinearProgressIndicator(),
+        //       );
+        //     },
+        //   );
+        // });
+        // Timer.run(() {
+        //   return showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         shape: RoundedRectangleBorder(
+        //             side: BorderSide(
+        //                 color: Colors.green,
+        //                 style: BorderStyle.solid,
+        //                 width: 1.5),
+        //             borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        //         title: Text("Signed in"),
+        //         // content: LinearProgressIndicator(),
+        //       );
+        //     },
+        //   );
+        // });
         Navigator.push(context,
             new MaterialPageRoute(builder: (context) => VendorBoardPage()));
       }
     } else {
-      print("Invalid email or password");
-      // _showMessage("Invalid email or password");
+      //retrieve error message from API, if inputs are not empty
+      if (this._loginData._email.text.isNotEmpty ||
+          this._loginData._password.text.isNotEmpty) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Colors.red, style: BorderStyle.solid, width: 1.5),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              content: Container(
+                child: Text(
+                  // this._loginData._email.text.isEmpty ||
+                  //         this._loginData._password.text.isEmpty
+                  //     ? "Please input missing values"
+                  //     :
+                  'Your email/password is incorrect or you do not have an account',
+                ),
+              ),
+              title: Text(
+                // 'Error: ' + body['error'],
+                // this._loginData._email.text.isEmpty ||
+                //         this._loginData._password.text.isEmpty
+                //     ? "Error: ${body['errors']}"
+                //     :
+                "Error: ${body['error']}",
+                style: TextStyle(color: Colors.red),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Close",
+                      style: TextStyle(color: Colors.red),
+                    ))
+              ],
+            );
+          },
+        );
+      }
     }
     // print(body);
 

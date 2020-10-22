@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_form/api/api.dart';
 
-void mani() {
+void main() {
   runApp(MaterialApp(
     home: UploadProduct(),
   ));
@@ -40,7 +40,7 @@ class _UploadProductState extends State<UploadProduct> {
   final picker = ImagePicker();
   var response;
 
-  bool isUploading = false;
+  static bool isUploading = false;
 
   ProductData _productData = new ProductData();
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -116,15 +116,54 @@ class _UploadProductState extends State<UploadProduct> {
 
   @override
   Widget build(BuildContext context) {
+    //footer
+    Widget footerSection = Container(
+      margin: const EdgeInsets.only(top: 20.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(bottom: 3),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+              color: Colors.black,
+              width: 2.0,
+            ))),
+            child: InkWell(
+              child: Text(
+                isUploading ? "Uploading" : "Upload",
+                style: TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              onTap: () {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  print("P_name: ${_productData._name.text}");
+                  print("P_price: ${_productData._price.text}");
+                  print("P_units: ${_productData._units.text}");
+                  print("P_description: ${_productData._description.text}");
+                  print("P_category: ${_currenItemsSelected.toString()}");
+                }
+                isUploading ? null : _saveProduct();
+              },
+            ),
+          )
+        ],
+      ),
+    );
+
     return Scaffold(
         body: SingleChildScrollView(
             child: new Container(
-                padding: EdgeInsets.fromLTRB(50.0, 50.0, 50.0, 0),
+                padding: EdgeInsets.fromLTRB(40.0, 50.0, 40.0, 0),
                 child: Form(
                     key: this._formKey,
                     child: Column(children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 45.0, 10.0),
+                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 65.0, 10.0),
                         child: Text(
                           "Upload Product",
                           style: TextStyle(
@@ -149,7 +188,7 @@ class _UploadProductState extends State<UploadProduct> {
                             labelText: "Product's name",
                             labelStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                                color: Colors.grey[700]),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -173,7 +212,7 @@ class _UploadProductState extends State<UploadProduct> {
                             labelText: "Product's price",
                             labelStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                                color: Colors.grey[700]),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -197,7 +236,7 @@ class _UploadProductState extends State<UploadProduct> {
                             labelText: "Product's units",
                             labelStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                                color: Colors.grey[700]),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -222,7 +261,7 @@ class _UploadProductState extends State<UploadProduct> {
                             labelText: "Product's description",
                             labelStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                                color: Colors.grey[700]),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -237,7 +276,7 @@ class _UploadProductState extends State<UploadProduct> {
                             "Select produce category:",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey,
+                                color: Colors.grey[700],
                                 fontSize: 16.0),
                           ),
                           alignment: Alignment.topLeft,
@@ -251,7 +290,7 @@ class _UploadProductState extends State<UploadProduct> {
                               dropDownStringItem,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
+                                  color: Colors.grey[700]),
                             ),
                           );
                         }).toList(),
@@ -274,7 +313,7 @@ class _UploadProductState extends State<UploadProduct> {
                                 "Take picture:",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
+                                    color: Colors.grey[700],
                                     fontSize: 16.0),
                               ),
                               alignment: Alignment.topLeft,
@@ -299,32 +338,8 @@ class _UploadProductState extends State<UploadProduct> {
                         ],
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: GestureDetector(
-                          child: Text(
-                            isUploading ? "Uploading" : "Upload",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          onTap: () {
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-                              print("P_name: ${_productData._name.text}");
-                              print("P_price: ${_productData._price.text}");
-                              print("P_units: ${_productData._units.text}");
-                              print(
-                                  "P_description: ${_productData._description.text}");
-                              print(
-                                  "P_category: ${_currenItemsSelected.toString()}");
-                            }
-                            isUploading ? null : _saveProduct();
-                          },
-                        ),
-                      )
+                      //footer
+                      footerSection
                     ])))));
   }
 
@@ -359,12 +374,92 @@ class _UploadProductState extends State<UploadProduct> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+    var body = json.decode(res.body);
 
     if (res.statusCode == 200) {
       _formKey.currentState.save();
-      print(res.body.toString());
+      // print(res.body.toString());
+
+      //API response message on an alertdialog()
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(body['message']),
+        action: SnackBarAction(label: 'Close', onPressed: () {}),
+      ));
+
+      //
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // shape: RoundedRectangleBorder(
+            //     side: BorderSide(
+            //         color: Colors.green, style: BorderStyle.solid, width: 1.5),
+            //     borderRadius: BorderRadius.all(Radius.circular(10))),
+            content: Container(
+              child: RaisedButton(
+                  child: Text(
+                    'Open QRCode',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                  color: Colors.white,
+                  onPressed: null),
+              // child: InkWell(
+              //   child: Text('View and share QRCode'),
+              // ),
+            ),
+            title: Text(
+              'QRcode created!',
+              style: TextStyle(color: Colors.green),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    //if product created reset the form(doesnt work😒)
+                    _formKey.currentState.reset();
+                  },
+                  child: Text(
+                    "Close",
+                    style: TextStyle(color: Colors.green),
+                  ))
+            ],
+          );
+        },
+      );
     } else {
       print("Failed to stored product");
+      print(body['message']);
+
+      //API response message on an alertdialog()
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: Colors.red, style: BorderStyle.solid, width: 1.5),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            content: Container(
+              // child: Text('Error: ' + body['message']),
+              child: Text('Check inputs and retry again!'),
+            ),
+            title: Text(
+              'Error: Retry again',
+              style: TextStyle(color: Colors.red, fontSize: 18.0),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Close",
+                    style: TextStyle(color: Colors.red),
+                  ))
+            ],
+          );
+        },
+      );
     }
 
     setState(() {

@@ -71,12 +71,44 @@ class _BuyerSignupPageState extends State<BuyerSignupPage> {
     var body = json.decode(res.body);
     if (body['token'] != null) {
       //Save and retrieve user's token from localstorage
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('bigStore.jwt', body['token']);
-      localStorage.setString('bigStore.user', json.encode(body['user']));
-      var userJson = localStorage.getString('bigStore.user');
-      var user = json.decode(userJson);
-      print(user['id']);
+      // SharedPreferences localStorage = await SharedPreferences.getInstance();
+      // localStorage.setString('bigStore.jwt', body['token']);
+      // localStorage.setString('bigStore.user', json.encode(body['user']));
+      // var userJson = localStorage.getString('bigStore.user');
+      // var user = json.decode(userJson);
+      // print(user['id']);
+
+      //message showing dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: Colors.green, style: BorderStyle.solid, width: 1.5),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            content: Container(
+              child: Text(
+                body['message'],
+              ),
+            ),
+            title: Text(
+              'Success',
+              style: TextStyle(color: Colors.green),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Close",
+                    style: TextStyle(color: Colors.green),
+                  ))
+            ],
+          );
+        },
+      );
 
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => BuyerBoardPage()));
@@ -225,7 +257,7 @@ class _BuyerSignupPageState extends State<BuyerSignupPage> {
                     // _formKey.currentState.reset();
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      _formKey.currentState.reset();
+                      // _formKey.currentState.reset();
                     }
                   },
                   color: Colors.green,
