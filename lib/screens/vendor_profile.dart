@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:simple_form/api/api.dart';
 import 'package:simple_form/screens/productsList.dart';
 import 'package:simple_form/screens/signup_all.dart';
+import 'package:simple_form/screens/vendorBoard.dart';
 
 import '../login.dart';
 
@@ -22,9 +23,10 @@ class VendorProfile extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: VendorProfilePage(),
-      // routes: <String, WidgetBuilder>{
-      //   '/orders': (BuildContext context) => new OrdersPage()
-      // },
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext context) => new FormPage(),
+        '/bottomNav': (BuildContext context) => new VendorBoardPage()
+      },
     );
   }
 }
@@ -112,6 +114,7 @@ class _VendorProfileState extends State<VendorProfilePage> {
     // revoke token from server(logout)
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String token = localStorage.getString('bigStore.jwt');
+    String user = localStorage.getString('bigStore.user');
 
     String _url = 'http://localhost:8000/api/logout';
 
@@ -120,12 +123,13 @@ class _VendorProfileState extends State<VendorProfilePage> {
       'Authorization': 'Bearer $token',
     });
     // var res = await CallApi().getData('logout');
+
     var body = json.decode(res.body);
     print(body);
 
     if (res.statusCode == 200) {
       //remove the user
-      localStorage.remove('user');
+      localStorage.remove('bigStore.user');
       //remove the token
       localStorage.remove('bigStore.jwt');
       //UX message from API
@@ -133,8 +137,14 @@ class _VendorProfileState extends State<VendorProfilePage> {
         content: Text(body['message']),
         action: SnackBarAction(label: 'Close', onPressed: () {}),
       ));
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => SignUpPage()));
+      Navigator.pushNamed(context, '/login');
+
+      // Navigator.push(
+      //     context, new MaterialPageRoute(builder: (context) => SignUpPage()));
+      // Navigator.pop(context,
+      //     new MaterialPageRoute(builder: (context) => VendorBoardPage()));
+      // Navigator.popAndPushNamed(
+      //     context, MaterialPageRoute(builder: (context) => VendorBoardPage()));
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(body['message']),
@@ -436,7 +446,6 @@ class _VendorProfileState extends State<VendorProfilePage> {
       titleSection,
       _buildProfileResponse(context, 'Name',
           userData != 'null' ? userData['name'] : "", Icons.account_box),
-      // emailSection,
       _buildProfileResponse(context, 'Email',
           userData != 'null' ? userData['email'] : "", Icons.email),
       // _buildResponse(context, 'Email',

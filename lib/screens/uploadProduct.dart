@@ -158,12 +158,12 @@ class _UploadProductState extends State<UploadProduct> {
     return Scaffold(
         body: SingleChildScrollView(
             child: new Container(
-                padding: EdgeInsets.fromLTRB(40.0, 50.0, 40.0, 0),
+                padding: EdgeInsets.fromLTRB(40.0, 70.0, 40.0, 0),
                 child: Form(
                     key: this._formKey,
                     child: Column(children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 65.0, 10.0),
+                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 65.0, 30.0),
                         child: Text(
                           "Upload Product",
                           style: TextStyle(

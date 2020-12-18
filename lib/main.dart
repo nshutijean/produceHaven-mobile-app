@@ -38,90 +38,90 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text("Produce Haven Trade"), backgroundColor: Colors.green),
+        // appBar: AppBar(
+        //     title: Text("Produce Haven Trade"), backgroundColor: Colors.green),
         body: new Container(
-          padding: EdgeInsets.fromLTRB(40.0, 200.0, 40.0, 0.0),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                // Logo
-                Container(),
-                Container(
-                  height: 50.0,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(5.0),
-                    shadowColor: Colors.transparent,
-                    color: Colors.green,
-                    elevation: 7.0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/login');
-                      },
-                      child: Center(
-                        child: Text(
-                          'SIGN IN',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              wordSpacing: 2.0,
-                              fontSize: 18.0),
-                        ),
-                      ),
+      padding: EdgeInsets.fromLTRB(40.0, 200.0, 40.0, 0.0),
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            // Logo
+            Container(),
+            Container(
+              height: 50.0,
+              child: Material(
+                borderRadius: BorderRadius.circular(5.0),
+                shadowColor: Colors.transparent,
+                color: Colors.green,
+                elevation: 7.0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/login');
+                  },
+                  child: Center(
+                    child: Text(
+                      'SIGN IN',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          wordSpacing: 2.0,
+                          fontSize: 18.0),
                     ),
                   ),
                 ),
-                SizedBox(height: 30.0),
-                Container(
-                  height: 50.0,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(5.0),
-                    shadowColor: Colors.transparent,
-                    color: Colors.green,
-                    elevation: 7.0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/signup');
-                      },
-                      child: Center(
-                        child: Text(
-                          'JOIN US',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              wordSpacing: 5.0,
-                              fontSize: 18.0),
-                        ),
-                      ),
+              ),
+            ),
+            SizedBox(height: 30.0),
+            Container(
+              height: 50.0,
+              child: Material(
+                borderRadius: BorderRadius.circular(5.0),
+                shadowColor: Colors.transparent,
+                color: Colors.green,
+                elevation: 7.0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/signup');
+                  },
+                  child: Center(
+                    child: Text(
+                      'JOIN US',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          wordSpacing: 5.0,
+                          fontSize: 18.0),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 40.0,
-                ),
+              ),
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () => openBrowserTab(),
-                      child: Text(
-                        'Visit the web',
-                        style: TextStyle(
-                            color: Colors.green,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.underline,
-                            fontSize: 18.0),
-                      ),
-                    )
-                  ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                InkWell(
+                  onTap: () => openBrowserTab(),
+                  child: Text(
+                    'Visit the web',
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.underline,
+                        fontSize: 18.0),
+                  ),
                 )
               ],
-            ),
-          ),
-        ));
+            )
+          ],
+        ),
+      ),
+    ));
   }
 }
