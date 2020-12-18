@@ -1,7 +1,7 @@
 # ProduceHaven mobile app (WIP)
 
 ### What is this app about?
-- It complementary app to an ecommerce web app that takes care quality of assurance of fresh produce in real-time. It adds functionalities that are required to be performed on a mobile app
+- It's a complementary app to an ecommerce web app that takes care quality of assurance of fresh produce in real-time. It adds functionalities that are required to be performed on a mobile app
 
 ### Problem statement
  - It's really hard to know if the product (fresh produce) is as fresh and of good quality as you want it to.
