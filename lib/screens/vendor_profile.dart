@@ -96,14 +96,14 @@ class _VendorProfileState extends State<VendorProfilePage> {
   void _countUploads() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String token = localStorage.getString('bigStore.jwt');
-    String _url = 'http://localhost:8000/api/products';
+    String _url = 'http://localhost:8000/api/showWithAuth';
     var response = await http.get(_url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
     var body = json.decode(response.body);
-    // print(body.toString());
+    print(body.toString());
     setState(() {
       uploads = body.length;
     });

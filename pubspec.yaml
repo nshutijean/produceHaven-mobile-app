@@ -21,14 +21,15 @@ dependencies:
     sdk: flutter
   flutter_web_browser: "^0.11.0"
 
-  http: ^0.12.1
+  http:
   shared_preferences: 0.5.7
   barcode_scan: ^2.0.1
   cupertino_icons: ^0.1.2
-  image_picker:
   dio:
   path_provider:
   esys_flutter_share: ^1.0.2
+  file_picker: ^1.13.1
+  image_picker: ^0.6.7+17
   
 
 dev_dependencies:

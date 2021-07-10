@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 // import 'package:image/image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_form/api/api.dart';
-import 'package:image/image.dart' as imageUtils;
+// import 'package:image/image.dart' as imageUtils;
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_form/screens/viewQrcode.dart';
 // import 'package:simple_form/screens/viewQrcode.dart';
@@ -34,6 +34,7 @@ class ProductsPage extends StatefulWidget {
 
 class Product {
   final int id;
+  final int userId;
   final String name;
   final String description;
   final int units;
@@ -42,8 +43,8 @@ class Product {
   final String qrcodeUrl;
   final String image;
 
-  Product(this.id, this.name, this.description, this.units, this.price,
-      this.category, this.qrcodeUrl, this.image);
+  Product(this.id, this.userId, this.name, this.description, this.units,
+      this.price, this.category, this.qrcodeUrl, this.image);
 }
 
 class ProductData {
@@ -74,17 +75,33 @@ class _ProductsPageState extends State<ProductsPage> {
   var qrcode;
 
   Future<List<Product>> _getProducts() async {
-    var data = await CallApi().getData("products");
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String token = localStorage.getString('bigStore.jwt');
+    String _url = 'http://localhost:8000/api/showWithAuth';
+    var data = await http.get(_url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
 
     // id = jsonData[index]['id'];
     // print(jsonData[12]['qrcodeUrl']);
     var jsonData = json.decode(data.body);
+    print(jsonData);
 
     List<Product> products = [];
 
     for (var p in jsonData) {
-      Product product = Product(p["id"], p["name"], p["description"],
-          p["units"], p["price"], p["category"], p["qrcodeUrl"], p["image"]);
+      Product product = Product(
+          p["id"],
+          p["user_id"],
+          p["name"],
+          p["description"],
+          p["units"],
+          p["price"],
+          p["category"],
+          p["qrcodeUrl"],
+          p["image"]);
       products.add(product);
     }
     print(products.length);

@@ -15,7 +15,7 @@ class ViewQrcode extends StatelessWidget {
   //receive the public qrcode variable into a constructor
   var qrcode;
   String qrCodeUrl =
-      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg";
+      "https://codespeedy.com/wp-content/uploads/2020/01/Qrcode.png";
   ViewQrcode({this.qrcode});
 
   @override
