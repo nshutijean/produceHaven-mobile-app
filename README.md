@@ -1,7 +1,7 @@
 # ProduceHaven mobile app (WIP)
 
 ### What is this app about?
-- It complementary app to an ecommerce web app that takes care quality of assurance of fresh produce in real-time. It adds functionalities that are required to be performed on a mobile app
+- It's a complementary app to an ecommerce web app that takes care quality of assurance of fresh produce in real-time. It adds functionalities that are required to be performed on a mobile app
 
 ### Problem statement
  - It's really hard to know if the product (fresh produce) is as fresh and of good quality as you want it to.
@@ -30,8 +30,8 @@
 ### Dart/Flutter dependencies used
  - ``http``: used it to handle http requests
  - ``shared_preferences``: used it to store simple data from the API
- - ``barcode_scan``: used to scan QRcode
- - ``image_picker``: used it to select images from gallery and take picture  
+ - ``barcode_scan``: used it to scan QRcode
+ - ``image_picker``: used it to select images from gallery and take pictures  
  - ``flutter_web_browser``: used it to handle in-app web browsing when redirecting
  - ``dio``: used its FormData to upload pictures
  - ``esys_flutter_share``: used it to share QRcode image with other apps
