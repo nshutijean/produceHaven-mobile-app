@@ -446,7 +446,7 @@ class _UploadProductState extends State<UploadProduct> {
       'units': this._productData._units.text,
       'price': this._productData._price.text,
       'image': imageRes.toString(),
-      'category': this._currenItemsSelected.toString(),
+      'category': this._currenItemsSelected.toString().toLowerCase(),
       'certificate': pdfRes.toString()
     };
     // print(data);

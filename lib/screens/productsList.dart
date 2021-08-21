@@ -247,7 +247,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   // Text(this._productData._qrcode_url.text.isEmpty
                   //     ? 'No QRCode provided'
                   //     : this._productData._qrcode_url.text)
-                  FlatButton(
+                  TextButton(
                     //read qrcodeUrl from DB
                     child: Text(qrcode == 'null'
                         ? 'No QRCode provided'
@@ -274,7 +274,7 @@ class _ProductsPageState extends State<ProductsPage> {
             actions: <Widget>[
               Row(
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       'Cancel',
                       style: TextStyle(color: Colors.red),
@@ -290,7 +290,7 @@ class _ProductsPageState extends State<ProductsPage> {
               // ),
               Row(
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       'UPDATE',
                       style: TextStyle(color: Colors.green),
@@ -402,7 +402,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                       actions: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            FlatButton(
+                                            TextButton(
                                                 onPressed: () {
                                                   int pid =
                                                       snapshot.data[index].id;
@@ -418,7 +418,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                         ),
                                         Row(
                                           children: <Widget>[
-                                            FlatButton(
+                                            TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },

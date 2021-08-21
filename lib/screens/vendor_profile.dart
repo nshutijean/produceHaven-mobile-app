@@ -146,7 +146,7 @@ class _VendorProfileState extends State<VendorProfilePage> {
       // Navigator.popAndPushNamed(
       //     context, MaterialPageRoute(builder: (context) => VendorBoardPage()));
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(body['message']),
         action: SnackBarAction(label: 'Close', onPressed: () {}),
       ));

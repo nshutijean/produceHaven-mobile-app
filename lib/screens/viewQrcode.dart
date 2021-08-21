@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
+
 void main() {
   runApp(MaterialApp(
     home: ViewQrcode(),
@@ -13,38 +15,15 @@ void main() {
 
 class ViewQrcode extends StatelessWidget {
   //receive the public qrcode variable into a constructor
-  var qrcode;
-  String qrCodeUrl =
-      "https://codespeedy.com/wp-content/uploads/2020/01/Qrcode.png";
+  String qrcode;
   ViewQrcode({this.qrcode});
+
+  // String qrCodeUrl =
+  //     "https://codespeedy.com/wp-content/uploads/2020/01/Qrcode.png";
 
   @override
   Widget build(BuildContext context) {
-    //change localhost to a specified IP for connection
-    // String newUrl = qrcode.replaceAll("localhost", "192.168.43.134");
-    //encode png image
-    // var encodedPng = Image.memory(imageUtils.encodePng(qrcode));
-    //turn path into image
-    // Image image = Image.file(File(qrcode));
-    // File file = File(qrcode);
-    // final _imageFile = ImageProcess.decodeImage(
-    //   file.readAsBytesSync(),
-    // );
-    // Uint8List bytes = file.readAsBytesSync();
-    // String base64Image = base64Encode(bytes);
-
-    // Future<File> urlToFile(String imageUrl) async {
-    //   var rng = new Random();
-    //   Directory tempDir = await getTemporaryDirectory();
-    //   String tempPath = tempDir.path;
-    //   // File file = new File(qrcode);
-    //   File file =
-    //       new File('$tempPath' + (rng.nextInt(100)).toString() + '.png');
-    //   http.Response response = await http.get(imageUrl);
-    //   await file.writeAsBytes(response.bodyBytes);
-    //   return file;
-    // }
-
+    print('Qrcode:' + qrcode);
     return Scaffold(
       appBar: AppBar(
         title: Text('QR code'),
@@ -76,19 +55,6 @@ class ViewQrcode extends StatelessWidget {
                   fontStyle: FontStyle.italic),
             ),
           ),
-          // Card(
-          //   // padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 40.0),
-          //   child: Hero(
-
-          //     tag: 'qrcode_img',
-          //     // child: Image.memory(imageUtils.encodePng(base64Image)),
-          //     child: Image.network(
-          //         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"),
-          //     // child: Image.file(),
-          //     // child: Image.file(File(
-          //     //     "D:\\MyStuff\\EFruitsVegies\\Laravel + VueJs\\workflow\\pht.v1\\storage\\app\\public\\qrcode_img\\1602717641.png")),
-          //   ),
-          // ),
           SizedBox(
             height: 20.0,
           ),
@@ -104,8 +70,9 @@ class ViewQrcode extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Card(
-                  child: Image.network(qrCodeUrl),
-                ),
+                    child: CachedNetworkImage(
+                  imageUrl: qrcode,
+                )),
               ),
             ),
           ),
@@ -197,16 +164,16 @@ class ViewQrcode extends StatelessWidget {
     );
   }
 
-  Future<void> _shareImageFromUrl() async {
-    try {
-      var request = await HttpClient().getUrl(Uri.parse(qrCodeUrl));
-      var response = await request.close();
-      Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-      await Share.file('QR code', 'product_qrcode.png', bytes, 'image/png');
-    } catch (e) {
-      print('error: $e');
-    }
-  }
+  // Future<void> _shareImageFromUrl() async {
+  //   try {
+  //     var request = await HttpClient().getUrl(Uri.parse(qrcode));
+  //     var response = await request.close();
+  //     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+  //     await Share.file('QR code', 'product_qrcode.png', bytes, 'image/png');
+  //   } catch (e) {
+  //     print('error: $e');
+  //   }
+  // }
 
   Future<void> _shareText() {
     try {
